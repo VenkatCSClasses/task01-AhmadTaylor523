@@ -30,8 +30,9 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid( "a@b.com"));   // valid email address
         assertFalse( BankAccount.isEmailValid(""));         // empty string
         assertFalse( BankAccount.isEmailValid("ab@s..com"));  // consecutive periods in domain
-        
-        
+        assertTrue(BankAccount.isEmailValid("abc-d@mail.com")); // valid email with hyphen
+        assertFalse(BankAccount.isEmailValid(".abc@mail.com")); // period at start of local part
+        assertFalse(BankAccount.isEmailValid("abc#def@h.com")); // invalid character '#'
     }
 
     @Test
