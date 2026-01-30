@@ -27,12 +27,12 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));   // valid email address
-        assertFalse( BankAccount.isEmailValid(""));         // empty string
-        assertFalse( BankAccount.isEmailValid("ab@s..com"));  // consecutive periods in domain
-        assertTrue(BankAccount.isEmailValid("abc-d@mail.com")); // valid email with hyphen
-        assertFalse(BankAccount.isEmailValid(".abc@mail.com")); // period at start of local part
-        assertFalse(BankAccount.isEmailValid("abc#def@h.com")); // invalid character '#'
+        assertTrue(BankAccount.isEmailValid( "a@b.com"));   // valid email address (equivalence class: valid email)
+        assertFalse( BankAccount.isEmailValid(""));         // empty string (equivalence class: empty string)
+        assertFalse( BankAccount.isEmailValid("ab@s..com"));  // consecutive periods in domain (equivalence class: consecutive periods)
+        assertTrue(BankAccount.isEmailValid("abc-d@mail.com")); // valid email with hyphen (equivalence class: valid email with special character)
+        assertFalse(BankAccount.isEmailValid(".abc@mail.com")); // period at start of local part (equivalence class: period at start)
+        assertFalse(BankAccount.isEmailValid("abc#def@h.com")); // invalid character '#' (equivalence class: invalid character)
     }
 
     @Test
