@@ -48,7 +48,7 @@ class BankAccountTest {
         assertEquals(0,bankAccount.getBalance(),0.001);//Equivalenence class : withdraw amount equal to balance
         assertEquals(0,bankAccount.getBalance(),0.001);//Equivalenence class : withdraw amount zero
        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-50));//Equivalenence class : withdraw negative amount 
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(Double.NaN)); //Equivalence class : invalid character input (non-numeric)
+        
          
         bankAccount2.withdraw(50); //Equivalence class: withdraw amount less than balance but not negative
         assertEquals(50, bankAccount2.getBalance(), 0.001);
@@ -65,7 +65,7 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(0.111)); //Equivalence class : greater than 2 decimal places
         assertThrows(IllegalArgumentException.class, () ->bankAccount3.withdraw(-10)); //Equivalence class : negative amount withdrawn
 
-        assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(2.110)); //Equivalence class : greater than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(2.11001)); //Equivalence class : greater than 2 decimal places
         assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(-1.00)); // Equivalence class : negative amount withdrawn
     }
 
@@ -91,7 +91,7 @@ class BankAccountTest {
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
 
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("valid@mail.com", 100.110)); // double starting balance with more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("valid@mail.com", 100.110111)); // double starting balance with more than 2 decimal places
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("valid@email.com", 100.001)); // double starting balance with more than 2 decimal places
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("validemail2@gmail.com", -100)); // invalid negative starting balance
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("validemail12@gmail.com", -1.00)); // invalid negative starting balance

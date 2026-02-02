@@ -7,6 +7,7 @@ public class BankAccount {
 
     /**
      * @throws IllegalArgumentException if email is invalid
+     * @throws IllegalArgumentException if startingBalance is invalid
      */
     public BankAccount(String email, double startingBalance){
         if (isEmailValid(email)){
@@ -15,6 +16,9 @@ public class BankAccount {
         }
         else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
+        }
+        if (!isAmountValid(startingBalance)){
+            throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         }
     }
 
@@ -30,8 +34,12 @@ public class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * if amount is larger than balance, throws InsufficientFundsException. 
      * if amount is negative, it throws IllegalArgumentException
+     * 
      */
     public void withdraw (double amount) throws InsufficientFundsException{
+        if (!isAmountValid(amount) || amount == 0){
+            throw new IllegalArgumentException("Invalid withdraw amount: " + amount);
+        }
         if (amount <= balance){
             balance -= amount;
         }
