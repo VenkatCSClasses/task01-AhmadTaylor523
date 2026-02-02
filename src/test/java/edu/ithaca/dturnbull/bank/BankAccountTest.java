@@ -11,9 +11,25 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
+        // Equivalence class: typical positive integer balance
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals(200, bankAccount.getBalance(), 0.001);
+
+        // Equivalence class: zero balance
+        BankAccount zeroBal = new BankAccount("zero@bal.com", 0);
+        assertEquals(0, zeroBal.getBalance(), 0.0001);
+
+        // Equivalence class: fractional (decimal) balance
+        BankAccount fractional = new BankAccount("frac@bal.com", 12.34);
+        assertEquals(12.34, fractional.getBalance(), 1e-6);
+
+        // Equivalence class: very large balance
+        BankAccount large = new BankAccount("rich@bank.com", 1000000000);
+        assertEquals(1000000000, large.getBalance(), 1e-3);
+
+        // Equivalence class: negative starting balance 
+        BankAccount negative = new BankAccount("neg@bal.com", -50);
+        assertEquals(-50, negative.getBalance(), 1e-6);
     }
 
     @Test
