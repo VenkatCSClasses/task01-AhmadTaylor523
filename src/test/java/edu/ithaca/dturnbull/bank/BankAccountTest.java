@@ -54,6 +54,9 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid("abc-d@mail.com")); // valid email with hyphen (equivalence class: valid email with special character)
         assertFalse(BankAccount.isEmailValid(".abc@mail.com")); // period at start of local part (equivalence class: period at start)
         assertFalse(BankAccount.isEmailValid("abc#def@h.com")); // invalid character '#' (equivalence class: invalid character)
+
+        assertFalse(BankAccount.isEmailValid("heywassup.com")); // equivalence class: missing '@' symbol
+        assertFalse(BankAccount.isEmailValid("abc..def@mail..com")); // equivalence class: consecutive periods in local part
     }
 
     @Test
