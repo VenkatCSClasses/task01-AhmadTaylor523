@@ -39,6 +39,8 @@ class BankAccountTest {
 
         BankAccount bankAccount2 = new BankAccount("c@d.com", 100);
 
+        BankAccount bankAccount3 = new BankAccount("e@f.com", 100);
+        
         assertEquals(100, bankAccount.getBalance(), 0.001);
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
 
@@ -60,6 +62,11 @@ class BankAccountTest {
         // Boundary Value: withdraw amount just greater than balance
         assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(0.02));
 
+        assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(0.111)); //Equivalence class : greater than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () ->bankAccount3.withdraw(-10)); //Equivalence class : negative amount withdrawn
+
+        assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(2.110)); //Equivalence class : greater than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount3.withdraw(-1.00)); // Equivalence class : negative amount withdrawn
     }
 
     @Test
@@ -83,9 +90,13 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance(), 0.001);
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("valid@mail.com", 100.110)); // double starting balance with more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("valid@email.com", 100.001)); // double starting balance with more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("validemail2@gmail.com", -100)); // invalid negative starting balance
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("validemail12@gmail.com", -1.00)); // invalid negative starting balance
+
     }
-
-
     @Test
     void isAmountValidTest(){
         assertTrue(BankAccount.isAmountValid(100.00)); // equivalence class: valid amount
