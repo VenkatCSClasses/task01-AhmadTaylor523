@@ -59,6 +59,15 @@ public class BankAccount {
      * @return true if amount is valid, false otherwise
      */
     public static boolean isAmountValid(double amount){
-        return false;
+        if (amount < 0){
+            return false;
+        }
+        String amountStr = Double.toString(amount);
+        int indexOfDecimal = amountStr.indexOf('.');
+        if (indexOfDecimal == -1){
+            return true; // no decimal point, so it's a whole number
+        }
+        int numDecimalPlaces = amountStr.length() - indexOfDecimal - 1;
+        return numDecimalPlaces <= 2;
     }
 }
