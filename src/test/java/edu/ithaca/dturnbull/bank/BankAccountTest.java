@@ -28,8 +28,7 @@ class BankAccountTest {
         assertEquals(1000000000, large.getBalance(), 1e-3);
 
         // Equivalence class: negative starting balance 
-        BankAccount negative = new BankAccount("neg@bal.com", -50);
-        assertEquals(-50, negative.getBalance(), 1e-6);
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("neg@bal.com", -50));
     }
 
     @Test

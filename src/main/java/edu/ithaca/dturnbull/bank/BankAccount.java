@@ -1,5 +1,7 @@
 package edu.ithaca.dturnbull.bank;
 
+import java.math.BigDecimal;
+
 public class BankAccount {
 
     private String email;
@@ -67,17 +69,19 @@ public class BankAccount {
      * @return true if amount is valid, false otherwise
      */
     public static boolean isAmountValid(double amount){
-        if (amount < 0){
-            return false;
-        }
-        String amountStr = Double.toString(amount);
-        int indexOfDecimal = amountStr.indexOf('.');
-        if (indexOfDecimal == -1){
-            return true; // no decimal point, so it's a whole number
-        }
-        int numDecimalPlaces = amountStr.length() - indexOfDecimal - 1;
-        return numDecimalPlaces <= 2;
-    }
+        
+    // reject NaN / Infinity
+    if (!Double.isFinite(amount)) return false;
+
+    // reject negatives
+    if (amount < 0) return false;
+
+    // Use BigDecimal to inspect decimal places robustly
+    BigDecimal bd = BigDecimal.valueOf(amount).stripTrailingZeros();
+    int scale = Math.max(0, bd.scale()); // normalize negative scale to 0
+    return scale <= 2;
+}
+    
     /** 
      * Deposits the given amount into the bank account.
      * @param amount the amount to deposit
