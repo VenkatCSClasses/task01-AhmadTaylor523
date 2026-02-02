@@ -21,8 +21,29 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
+        BankAccount bankAccount2 = new BankAccount("c@d.com", 100);
+
         assertEquals(100, bankAccount.getBalance(), 0.001);
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+
+        bankAccount.withdraw(100);
+        assertEquals(0,bankAccount.getBalance(),0.001);//Equivalenence class : withdraw amount equal to balance
+        assertEquals(0,bankAccount.getBalance(),0.001);//Equivalenence class : withdraw amount zero
+       assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-50));//Equivalenence class : withdraw negative amount 
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(Double.NaN)); //Equivalence class : invalid character input (non-numeric)
+         
+        bankAccount2.withdraw(50); //Equivalence class: withdraw amount less than balance but not negative
+        assertEquals(50, bankAccount2.getBalance(), 0.001);
+        //Equivalence class: withdraw amount greater than balance 
+        assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(100));
+        //Equivalence class: withdraw amount too small (non-negative)
+        assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(0.001));
+        // Boundary Value: withdraw amount just less than balance
+        bankAccount2.withdraw(49.99);
+        assertEquals(0.01, bankAccount2.getBalance(), 0.001);
+        // Boundary Value: withdraw amount just greater than balance
+        assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(0.02));
+
     }
 
     @Test
