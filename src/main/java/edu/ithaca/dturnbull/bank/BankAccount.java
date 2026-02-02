@@ -84,8 +84,13 @@ public class BankAccount {
      * @throws IllegalArgumentException if the amount is invalid (negative or more than 2 decimal places) or zero
      */
     public void deposit(double amount){
-       //will complete later
-    }   
+       if (!isAmountValid(amount) || amount == 0){
+            throw new IllegalArgumentException("Invalid deposit amount: " + amount);
+        }
+        balance += amount;
+    } 
+
+     
 
     /**
      * Transfers the given amount from this account to the specified toAccount.     
@@ -95,7 +100,17 @@ public class BankAccount {
      * @throws IllegalArgumentException if toAccount is null or amount is invalid (negative or more than 2 decimal places) or zero
      */
     public void transfer(BankAccount toAccount, double amount) throws InsufficientFundsException {
-       //will complete later
+       if (toAccount == null) {
+            throw new IllegalArgumentException("Destination account cannot be null");
+        }
+        if (!isAmountValid(amount) || amount == 0) {
+            throw new IllegalArgumentException("Invalid transfer amount: " + amount);
+        }
+        else{
+        this.withdraw(amount); 
+        toAccount.deposit(amount);
+    }
+
 }
 
 }
