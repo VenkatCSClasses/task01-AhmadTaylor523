@@ -104,4 +104,31 @@ class BankAccountTest {
         assertFalse(BankAccount.isAmountValid(-50.00)); // equivalence class: negative amount
         assertFalse(BankAccount.isAmountValid(10.999)); // equivalence class: amount with more than 2 decimal places
     }
+
+    @Test
+    void depositTest(){
+        BankAccount bankAccount = new BankAccount("test@example.com", 100.00);
+        bankAccount.deposit(50.00);
+        assertEquals(150.00, bankAccount.getBalance(), 0.001);
+
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(10.999)); //Equivalence class: amount with more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-10.0)); //Equivalence class: negative amount deposited  
+
+}
+
+    @Test
+    void transferTest() throws InsufficientFundsException {
+        BankAccount accountA = new BankAccount("testA@example.com", 100.00);
+        BankAccount accountB = new BankAccount("testB@example.com", 50.00);
+        accountA.transfer(accountB, 25.00);
+        assertEquals(75.00, accountA.getBalance(), 0.001);
+        assertEquals(75.00, accountB.getBalance(), 0.001);
+
+        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(null, 10.0)); //Equivalence class: null destination account
+        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountB, 15.999)); //Equivalence class: amount with more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountB, -15.0)); //Equivalence class: negative amount transferred
+        assertThrows(InsufficientFundsException.class, () -> accountA.transfer(accountB, 200.0)); //Equivalence class: amount greater than balance
+        
+    }
+
 }

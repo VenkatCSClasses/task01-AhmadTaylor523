@@ -78,4 +78,24 @@ public class BankAccount {
         int numDecimalPlaces = amountStr.length() - indexOfDecimal - 1;
         return numDecimalPlaces <= 2;
     }
+    /** 
+     * Deposits the given amount into the bank account.
+     * @param amount the amount to deposit
+     * @throws IllegalArgumentException if the amount is invalid (negative or more than 2 decimal places) or zero
+     */
+    public void deposit(double amount){
+       //will complete later
+    }   
+
+    /**
+     * Transfers the given amount from this account to the specified toAccount.     
+     * @param toAccount
+     * @param amount
+     * @throws InsufficientFundsException
+     * @throws IllegalArgumentException if toAccount is null or amount is invalid (negative or more than 2 decimal places) or zero
+     */
+    public void transfer(BankAccount toAccount, double amount) throws InsufficientFundsException {
+       //will complete later
+}
+
 }
